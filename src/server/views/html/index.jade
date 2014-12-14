@@ -1,0 +1,47 @@
+extends ../_layouts/master
+
+append header-meta
+  base(href='/')
+
+append body-ng-controller
+  - controller_name = 'Body_Controller';
+
+append body-title
+  +body-title('Web components with Polymer.js', 'A \'Hello World!\' attempt at web components using polymer.')
+
+append body-content
+  .row
+    .col-md-12
+      table.table.table-striped.table-condensed.table-bordered.width-100pct
+        tbody
+          tr
+            td
+              my-element
+          tr
+            td
+              proto-element
+          tr
+            td
+              ready-element
+          tr
+            td
+              name-tag
+          tr
+            td
+              fav-color
+          tr
+            td
+              age-slider
+          tr
+            td
+              color-picker(owner='Scott', color='blue')
+          tr
+            td
+              editable-color-picker(owner='Scott', color='blue')
+              
+append body-scripts
+  script(src='#{locals.baseUrl?baseUrl:""}/js/ng/home/config.min.js?noc=#{cacheKey}')
+  script(src='#{locals.baseUrl?baseUrl:""}/js/ng/home/controllers.min.js?noc=#{cacheKey}')
+  
+append body-polymer-elements
+  link(rel='import', href='#{locals.baseUrl?baseUrl:""}/polymer-elements/elements-csp.min.html?noc=#{cacheKey}')
