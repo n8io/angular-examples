@@ -11,9 +11,6 @@ module.exports = function(grunt) {
     jadeWatchFileArr: [
       './src/server/views/**/*.jade'
     ],
-    polymerSrcFileArr: [
-      './src/client/polymer-elements/*.html'
-    ],
     stylusWatchFileArr: [
       './src/server/css/**/*.styl'
     ],
@@ -70,21 +67,6 @@ module.exports = function(grunt) {
           'rm -rf src/client/ng',
           'mv src/client/js/ng.min.js src/client/js/ng/ng.min.js'
         ].join(' && ')
-      },
-      cleanPolymer: {
-        options: {
-          stdout: true,
-          execOptions: {
-            cwd: '.' //Up to proj root
-          }
-        },
-        command: [
-          'mv src/client/polymer-elements/elements-csp.min.html src/client/elements-csp.min.html',
-          'mv src/client/polymer-elements/elements-csp.min.js src/client/elements-csp.min.js',
-          'rm -rf src/client/polymer-elements/*',
-          'mv src/client/elements-csp.min.html src/client/polymer-elements/elements-csp.min.html',
-          'mv src/client/elements-csp.min.js src/client/polymer-elements/elements-csp.min.js'
-        ].join(' && ')
       }
     },
     copy: {
@@ -111,28 +93,6 @@ module.exports = function(grunt) {
             filter: 'isFile'
           }
         ]
-      },
-      polymerHtml: {
-        options: {
-          process: function(content, srcFilePath){
-            return content.replace('elements-csp.min.js', '/polymer-elements/elements-csp.min.js?noc=' + timestampMs);
-          }
-        },
-        src: './src/client/polymer-elements/elements-csp.min.html',
-        dest: './src/client/polymer-elements/elements-csp.min.html'
-      },
-      polymerJs: {
-        options: {
-          process: function(content, srcFilePath){
-            return [
-              '(function(){',
-              content,
-              '})();'
-            ].join('\n');
-          }
-        },
-        src: './src/client/polymer-elements/elements-csp.min.js',
-        dest: './src/client/polymer-elements/elements-csp.min.js'
       }
     },
     jshint: {
@@ -206,30 +166,6 @@ module.exports = function(grunt) {
           dest: './src/client/js/ng',
           ext: '.min.js'
         }]
-      },
-      devPolymer: {
-        options: {
-          mangle: false,
-          compress: false,
-          preserveComments: 'some',
-          beautify: {
-            beautify: true,
-            indent_level: 2
-          }
-        },
-        files: {
-          './src/client/polymer-elements/elements-csp.min.js': './src/client/polymer-elements/elements-csp.min.js'
-        }
-      },
-      prodPolymer: {
-        options: {
-          mangle: true,
-          compress: true,
-          banner : '/* Minified via UglifyJs ' + timestamp + ' */\n'
-        },
-        files: {
-          './src/client/polymer-elements/elements-csp.min.js': './src/client/polymer-elements/elements-csp.min.js'
-        }
       }
     },
     stylus: {
@@ -295,16 +231,6 @@ module.exports = function(grunt) {
         ]
       }
     },
-    vulcanize: {
-      dev: {
-        options: {
-          csp:  true
-        },
-        files: {
-          './src/client/polymer-elements/elements-csp.min.html': './src/client/polymer-elements/elements-csp.min.html'
-        }
-      }
-    },
     cssmin: {
       prod: {
         options:{
@@ -320,22 +246,6 @@ module.exports = function(grunt) {
       dev: {
         src: setup.jsNgSrcFileArr,
         dest: './src/client/js/ng/ng.min.js'
-      },
-      devPolymer: {
-        src: setup.polymerSrcFileArr,
-        dest: './src/client/polymer-elements/elements-csp.min.html'
-      }
-    },
-    htmlmin: {
-      prod: {
-        options: {
-          removeComments: true,
-          minifyJS: true,
-          minifyCSS: true
-        },
-        files: {
-          './src/client/polymer-elements/elements-csp.min.html': './src/client/polymer-elements/elements-csp.min.html'
-        }
       }
     },
     ngAnnotate: {
@@ -395,10 +305,6 @@ module.exports = function(grunt) {
       index: {
         src: './src/client/index.html',
         dest: './src/client/index.html'
-      },
-      polymer: {
-        src: './src/client/polymer-elements/elements-csp.min.html',
-        dest: './src/client/polymer-elements/elements-csp.min.html'
       }
     },
     watch: {
@@ -446,8 +352,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('postprocess', [
-    'shell:cleanNg',
-    'shell:cleanPolymer'
+    'shell:cleanNg'
   ]);
 
   // Dev build
@@ -458,15 +363,10 @@ module.exports = function(grunt) {
     'copy:js',
     'stylus:dev',
     'concat:dev',
-    'concat:devPolymer',
-    'vulcanize:dev',
-    'copy:polymerHtml',
-    'copy:polymerJs',
     'jshint',
     'ngAnnotate',
     'ngtemplates',
     'uglify:devNg',
-    'uglify:devPolymer',
     'prettify',
     'postprocess'
   ]);
@@ -488,11 +388,6 @@ module.exports = function(grunt) {
     'jade:prod',
     'copy:assets',
     'copy:js',
-    'concat:devPolymer',
-    'vulcanize:dev',
-    'copy:polymerHtml',
-    'copy:polymerJs',
-    'htmlmin:prod',
     'stylus:prod',
     'cssmin:prod',
     'ngAnnotate',
@@ -500,7 +395,6 @@ module.exports = function(grunt) {
     'uglify:prod',
     'uglify:prodNg',
     'uglify:prodNgCommon',
-    'uglify:prodPolymer',
     'postprocess'
   ]);
 };

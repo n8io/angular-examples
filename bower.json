@@ -1,7 +1,7 @@
 {
-  "name": "spa-wc",
+  "name": "angular-examples",
   "version": "0.0.0",
-  "homepage": "https://github.com/n8io/spa-wc",
+  "homepage": "https://github.com/n8io/angular-examples",
   "authors": [
     "Nate Clark <nate@n8io.com>"
   ],

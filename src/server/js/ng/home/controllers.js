@@ -10,8 +10,14 @@
     ;
 
   /* @ngInject */
-  function Body_Controller($log){
+  function Body_Controller($log, TestService){
+    var vm = this;
+    
     $log.log('Body_Controller loaded.');
+    
+    TestService.Get(function onSuccess(results){
+      vm.data = results;
+    });
   }
 
   /* @ngInject */

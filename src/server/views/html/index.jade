@@ -7,41 +7,29 @@ append body-ng-controller
   - controller_name = 'Body_Controller';
 
 append body-title
-  +body-title('Web components with Polymer.js', 'A \'Hello World!\' attempt at web components using polymer.')
+  +body-title('Angular sandbox')
 
 append body-content
   .row
     .col-md-12
-      table.table.table-striped.table-condensed.table-bordered.width-100pct
+      table(data-ng-if='bc.data.length').table.table-striped.table-condensed.table-bordered.width-100pct
+        thead
+          tr
+            th Name
+            th.width-150 Address
+            th.width-150 City
+            th.width-100 Zip
         tbody
-          tr
+          tr(data-ng-repeat='row in bc.data')
             td
-              my-element
-          tr
+              strong {{::row.name}}
             td
-              proto-element
-          tr
+              span {{::row.address.street}}
             td
-              ready-element
-          tr
+              span {{::row.address.city}}
             td
-              name-tag
-          tr
-            td
-              fav-color
-          tr
-            td
-              age-slider
-          tr
-            td
-              color-picker(owner='Scott', color='blue')
-          tr
-            td
-              editable-color-picker(owner='Scott', color='blue')
-              
+              span {{::row.address.zipcode}}
 append body-scripts
   script(src='#{locals.baseUrl?baseUrl:""}/js/ng/home/config.min.js?noc=#{cacheKey}')
   script(src='#{locals.baseUrl?baseUrl:""}/js/ng/home/controllers.min.js?noc=#{cacheKey}')
   
-append body-polymer-elements
-  link(rel='import', href='#{locals.baseUrl?baseUrl:""}/polymer-elements/elements-csp.min.html?noc=#{cacheKey}')
