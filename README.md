@@ -4,7 +4,8 @@ Requirements:
   NodeJs (0.10.*)
 
 ## Initialize
-`npm install`
+1. `npm install`
+2. `bower install`
 
 ## To build dev assets
 `grunt dev`
