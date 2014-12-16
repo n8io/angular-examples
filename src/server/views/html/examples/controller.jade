@@ -1,0 +1,22 @@
+extends ../../_layouts/master
+
+append header-meta
+  base(href='/')
+  
+append header-title
+  | Angular Examples : ngController
+
+append header-stylesheets
+  link(href='#{locals.baseUrl?baseUrl:""}/statics/bower_components/prism/themes/prism.css', rel='stylesheet', id='css-prism')
+
+append body-title
+  +body-title('ng-controller', 'The ngController directive attaches a controller class to the view. This is a key aspect of how angular supports the principles behind the Model-View-Controller design pattern.')
+
+append body-content
+  .row
+    .col-md-12
+      a(href='#{locals.baseUrl?baseUrl:""}/examples/snippets/ng-controller.html?noc=#{cacheKey}', target='_self') Live demo
+    .col-md-12
+      pre#html(data-src='#{locals.baseUrl?baseUrl:""}/examples/snippets/ng-controller.html?noc=#{cacheKey}').language-markup
+append body-scripts
+  script(src='#{locals.baseUrl?baseUrl:""}/statics/bower_components/prism/prism.js')

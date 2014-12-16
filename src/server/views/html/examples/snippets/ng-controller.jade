@@ -1,0 +1,32 @@
+extends ../../../_layouts/snippet-master
+  
+append body-ng-controller
+  - controller_name = 'Body_Controller';
+  
+append body-content
+  .pad-top-15
+    span Body_Controller initialized. See console for proof.
+    
+append body-scripts
+  script.
+    // From app.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app', []); // Setter for app module. Define app and dependencies.
+    })();
+    
+    // From controller.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app') // Getter for app module
+        .controller('Body_Controller', Body_Controller); // Define an app controller called Body_Controller
+        
+      function Body_Controller($log){
+        $log.log('Body_Controller loaded.');
+      }
+      Body_Controller.$inject = ['$log']; // Min-safe any controller dependencies
+    })();

@@ -3,32 +3,32 @@ extends ../_layouts/master
 append header-meta
   base(href='/')
 
+append header-title
+  | Angular Examples
+  
 append body-ng-controller
   - controller_name = 'Body_Controller';
 
 append body-title
-  +body-title('Angular sandbox')
+  +body-title('Angular Modules', 'A set of common modules you will probably use on a regular basis')
 
 append body-content
   .row
     .col-md-12
-      table(data-ng-if='bc.data.length').table.table-striped.table-condensed.table-bordered.width-100pct
-        thead
-          tr
-            th Name
-            th.width-150 Address
-            th.width-150 City
-            th.width-100 Zip
+      table.table.table-striped.table-condensed.table-bordered.width-100pct
         tbody
-          tr(data-ng-repeat='row in bc.data')
+          tr
             td
-              strong {{::row.name}}
+              a(href='/examples/app.html', target='_self') ng-app
+          tr
             td
-              span {{::row.address.street}}
+              a(href='/examples/controller.html', target='_self') ng-controller
+          tr
             td
-              span {{::row.address.city}}
+              a(href='/examples/service.html', target='_self') services
+          tr
             td
-              span {{::row.address.zipcode}}
+              a(href='/examples/directive.html', target='_self') directives
 append body-scripts
   script(src='#{locals.baseUrl?baseUrl:""}/js/ng/home/config.min.js?noc=#{cacheKey}')
   script(src='#{locals.baseUrl?baseUrl:""}/js/ng/home/controllers.min.js?noc=#{cacheKey}')

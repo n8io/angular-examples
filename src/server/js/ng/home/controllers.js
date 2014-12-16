@@ -7,13 +7,9 @@
     ;
 
   /* @ngInject */
-  function Body_Controller($log, TestService){
+  function Body_Controller($log){
     var vm = this;
     
     $log.log('Body_Controller loaded.');
-    
-    TestService.Get(function onSuccess(results){
-      vm.data = results;
-    });
   }
 })();

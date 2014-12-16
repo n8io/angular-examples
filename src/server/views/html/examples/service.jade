@@ -1,0 +1,22 @@
+extends ../../_layouts/master
+
+append header-meta
+  base(href='/')
+  
+append header-title
+  | Angular Examples : Services
+
+append header-stylesheets
+  link(href='#{locals.baseUrl?baseUrl:""}/statics/bower_components/prism/themes/prism.css', rel='stylesheet', id='css-prism')
+
+append body-title
+  +body-title('Angular services', 'Angular services are substitutable objects that are wired together using dependency injection (DI). You can use services to organize and share code across your app.')
+
+append body-content
+  .row
+    .col-md-12
+      a(href='#{locals.baseUrl?baseUrl:""}/examples/snippets/ng-service.html?noc=#{cacheKey}', target='_self') Live demo
+    .col-md-12
+      pre#html(data-src='#{locals.baseUrl?baseUrl:""}/examples/snippets/ng-service.html?noc=#{cacheKey}').language-markup
+append body-scripts
+  script(src='#{locals.baseUrl?baseUrl:""}/statics/bower_components/prism/prism.js')

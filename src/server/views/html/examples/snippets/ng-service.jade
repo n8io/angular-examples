@@ -1,0 +1,65 @@
+extends ../../../_layouts/snippet-master
+  
+append body-ng-controller
+  - controller_name = 'Body_Controller';
+
+append body-content
+  .mgn-top-15
+  .text-muted(data-ng-show='!bc.data') Loading data...
+  pre(data-ng-show='bc.data') {{bc.data | json}}
+  
+append body-scripts
+  script.
+    // From app.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app', ['ngResource']); // Add ngResource dependency
+    })();
+    
+    // From controller.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app') // Getter for app module
+        .controller('Body_Controller', Body_Controller);
+        
+      function Body_Controller($log, TestService){
+        var vm = this;
+        TestService.GetMockData(function onSuccess(err, results){
+          if(err){
+            return;
+          }
+          
+          vm.data = results;
+        });
+      }
+      Body_Controller.$inject = ['$log', 'TestService']; 
+    })();
+    
+    // From service.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app') // Getter for app module
+        .service('TestService', TestService);
+        
+      function TestService($timeout){
+        var svc = this;
+        var mockData = [
+          { id: 1, firstName: 'John', lastName: 'Doe' },
+          { id: 2, firstName: 'Jane', lastName: 'Doe' },
+          { id: 3, firstName: 'Pillsburry', lastName: 'Doe' }
+        ];
+        
+        svc.GetMockData = function GetMockData(callback){
+          $timeout(function waitAFewSeconds(){ // Pretend this takes a few seconds
+            return callback(null, mockData);
+          }, 2000);
+        };
+      }
+      TestService.$inject = ['$timeout'];
+    })();

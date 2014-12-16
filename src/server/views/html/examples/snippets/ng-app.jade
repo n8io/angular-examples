@@ -1,0 +1,16 @@
+extends ../../../_layouts/snippet-master
+
+append body-content
+  .pad-top-15
+    span Your app in now bootstrapped. Exciting right?
+
+append body-scripts
+  script.
+    // From app.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app', [ /* ... list out module dependencies */ ]);
+    })();
+    

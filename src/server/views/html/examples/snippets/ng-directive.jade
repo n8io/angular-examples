@@ -1,0 +1,85 @@
+extends ../../../_layouts/snippet-master
+  
+append body-ng-controller
+  - controller_name = 'Body_Controller';
+
+append body-content
+  .row
+    .col-md-3.pad-top-15.pad-bottom-5
+      input(type='email',data-ng-model='bc.email',placeholder='Enter email').form-control
+  .row
+    .col-md-12.pad-bottom-5
+      span Custom 'gravatar' directive
+    .col-md-12
+      gravatar(email='bc.email').img-rounded
+  
+append body-scripts
+  script(src='#{locals.baseUrl?baseUrl:""}/statics/bower_components/md5-jkmyers/md5.js', data-id='js-md5')
+  script.
+    // From app.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app', ['ngResource']); // Add ngResource dependency for angular services
+    })();
+    
+    // From controller.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app')
+        .controller('Body_Controller', Body_Controller);
+        
+      function Body_Controller($log){
+        var vm = this;
+        vm.email = 'n8@n8io.com';
+      }
+      Body_Controller.$inject = ['$log']; 
+    })();
+    
+    // From service.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app')
+        .service('Md5Service', Md5Service);
+        
+      function Md5Service(){
+        var svc = this;
+        
+        svc.GetMd5Hash = function GetMd5Hash(clearText, callback){
+          return md5(clearText||''); // Third part library for md5 hashing (md5-jkmyers - see js reference above)
+        };
+      }
+    })();
+    
+    // From directive.js
+    (function(){
+      'use strict';
+      
+      angular
+        .module('app') // Getter for app module
+        .directive('gravatar', Gravatar);
+        
+      function Gravatar(Md5Service){ // Make use of the MD5 service defined above
+        return {
+          restrict: 'E',
+          replace: true,
+          scope: {
+            email: '='
+          },
+          template: '<img class="gravatar-directive" ng-src="//www.gravatar.com/avatar/{{hashedEmail}}?d=mm" />',
+          link: linkFn
+        };
+        
+        function linkFn(scope, el, attrs){
+          scope.$watch('email', function(newVal){
+            scope.hashedEmail = Md5Service.GetMd5Hash(newVal||'');
+          });
+        }
+      }
+      Gravatar.$inject = ['Md5Service'];
+    })();
