@@ -25,10 +25,16 @@ append body-content
               a(href='/examples/controller.html', target='_self') ng-controller
           tr
             td
+              a(href='/examples/template.html', target='_self') ng-template
+          tr
+            td
               a(href='/examples/service.html', target='_self') services
           tr
             td
               a(href='/examples/directive.html', target='_self') directives
+          tr
+            td
+              a(href='/examples/routing.html', target='_self') routing
 append body-scripts
   script(src='#{locals.baseUrl?baseUrl:""}/js/ng/home/config.min.js?noc=#{cacheKey}')
   script(src='#{locals.baseUrl?baseUrl:""}/js/ng/home/controllers.min.js?noc=#{cacheKey}')

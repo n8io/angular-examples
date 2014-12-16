@@ -12,6 +12,10 @@ append body-content
       span Custom 'gravatar' directive
     .col-md-12
       gravatar(email='bc.email').img-rounded
+    .col-md-12
+      .gravatar(email='bc.email').img-rounded
+    .col-md-12
+      div(gravatar,email='bc.email').img-rounded
   
 append body-scripts
   script(src='#{locals.baseUrl?baseUrl:""}/statics/bower_components/md5-jkmyers/md5.js', data-id='js-md5')
@@ -66,7 +70,7 @@ append body-scripts
         
       function Gravatar(Md5Service){ // Make use of the MD5 service defined above
         return {
-          restrict: 'E',
+          restrict: 'AEC',
           replace: true,
           scope: {
             email: '='
